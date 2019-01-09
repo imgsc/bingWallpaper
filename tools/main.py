@@ -10,13 +10,15 @@ def getUrl():
 	return url
 
 def downloadImg(url):
-	jpgUrl ="https://cn.bing.com/{0}".format(url)
+	jpgUrl ="https://cn.bing.com{0}".format(url)
 	#print(jpgUrl)
+	pattern = re.compile(r"/az/hprichbg/rb/(.*?).jpg")
+	result = pattern.findall(url)
+	#print(result[0])
 	req = requests.get(jpgUrl)
 	if req.status_code == 200:
-		with open("bingWallpaper.jpg",'wb') as f:
+		with open(result[0]+".jpg",'wb') as f:
 			f.write(req.content)
-
 if __name__ == '__main__':
 	url = getUrl()
 	downloadImg(url)
